@@ -1,0 +1,43 @@
+/* 博客详情页相关css*/
+.details-main-area-width {
+  max-width: 60em !important;
+  margin: auto !important;
+}
+
+.blog-content-padded-response {
+  padding: 2em 3em !important;
+}
+
+.blog-label-padded-response {
+  padding-left: 3em !important;
+}
+
+.full-width-mobile {
+  margin-bottom: 0.5em !important;
+}
+
+/**------底部目录导航按钮---*/
+.m-position-fixed {
+  position: fixed !important;
+  z-index: 10;
+}
+
+.m-right-bottom {
+  bottom: 0 !important;
+  right: 0 !important;
+}
+
+@media screen and (max-width: 768px) {
+  .blog-content-padded-response {
+    padding: 2em 0 !important;
+  }
+
+  .blog-label-padded-response {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .full-width-mobile {
+    width: 100%;
+  }
+}

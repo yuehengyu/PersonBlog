@@ -1,0 +1,8 @@
+2020-12-04 17:39:00.173  INFO 5576 --- [restartedMain] com.yhy.blog.BlogApplication             : Starting BlogApplication using Java 1.8.0_171 on DESKTOP-53F4D6J with PID 5576 (G:\Workplace\PersonBlog\target\classes started by yuehe in G:\Workplace\PersonBlog)
+2020-12-04 17:39:00.180  INFO 5576 --- [restartedMain] com.yhy.blog.BlogApplication             : The following profiles are active: prod
+2020-12-04 17:39:04.000  WARN 5576 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-12-04 17:39:04.620  INFO 5576 --- [restartedMain] com.yhy.blog.BlogApplication             : Started BlogApplication in 5.384 seconds (JVM running for 7.366)
+2020-12-04 17:41:31.986  INFO 10476 --- [restartedMain] com.yhy.blog.BlogApplication             : Starting BlogApplication using Java 1.8.0_171 on DESKTOP-53F4D6J with PID 10476 (G:\Workplace\PersonBlog\target\classes started by yuehe in G:\Workplace\PersonBlog)
+2020-12-04 17:41:31.991  INFO 10476 --- [restartedMain] com.yhy.blog.BlogApplication             : The following profiles are active: prod
+2020-12-04 17:41:34.463  WARN 10476 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-12-04 17:41:34.957  INFO 10476 --- [restartedMain] com.yhy.blog.BlogApplication             : Started BlogApplication in 3.657 seconds (JVM running for 5.211)

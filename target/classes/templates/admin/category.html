@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/common_css_script :: common_head(~{::title}, ~{::link})">
+    <title>后台管理-分类管理页面</title>
+    <link rel="stylesheet" href="../../static/admin/css/category.css" th:href="@{/admin/css/category.css}">
+</head>
+<body>
+<!--导航-->
+<nav th:replace="common/comman_adminnav :: menu(2)"></nav>
+<!--二级导航-->
+<div th:replace="common/comman_adminnav :: menu1(6)"></div>
+
+<!--主体内容-->
+<div class="mainContent-padding index-main-area-width">
+    <div class="ui container">
+        <div class="ui mini success message" th:unless="${#strings.isEmpty(message)}">
+          <i class="close icon"></i>
+          <div class="header">提示： </div>
+          <p th:text="${message}">恭喜，操作成功</p>
+        </div>
+        <table class="ui celled table">
+            <!--表头-->
+            <thead>
+            <tr>
+                <th></th>
+                <th>分类名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+
+            <!--列表内容-->
+            <tbody>
+            <tr th:each="category,iterStat : ${page.content}">
+                <td th:text="${iterStat.count}">1</td>
+                <td th:text="${category.name}">学习</td>
+                <td>
+                    <a href="#" th:href="@{/admin/category/{id}/update(id = ${category.id})}"
+                       class="ui mini teal button">编辑</a>
+                    <a href="#" th:href="@{/admin/category/{id}/delete(id = ${category.id})}"
+                       class="ui mini red button">删除</a>
+                </td>
+            </tr>
+            </tbody>
+            <!--底部分页按钮-->
+            <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui mini pagination menu" th:if="${page.totalPages>1}">
+                        <a href="#" th:href="@{/admin/category(page = ${page.number}-1)}" class="item"
+                           th:unless="${page.first}">上一页</a>
+                        <a href="#" th:href="@{/admin/category(page = ${page.number}+1)}" class="item"
+                           th:unless="${page.last}">下一页</a>
+                    </div>
+                    <a href="#" th:href="@{/admin/category/addCategory}"
+                       class="ui mini right floated teal button">新增</a>
+                </th>
+            </tr>
+            </tfoot>
+
+        </table>
+    </div>
+</div>
+
+<!--底部footer-->
+<footer th:replace="common/common_footer :: footer"></footer>
+
+<!--公用JS-->
+<th:block th:replace="common/common_css_script :: script">
+</th:block>
+
+<!-- 手机端sidebar显示菜单-->
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('mobile-hide-nav');
+    });
+
+    $('.ui.dropdown')
+        .dropdown({
+            on: 'hover'
+        })
+    ;
+
+    //关闭消息提示框JS
+    $('.message .close')
+    .on('click', function (){
+      $(this)
+        .closest('.message')
+        .transition('fade')
+    });
+    //关闭消息提示框JS End
+</script>
+</body>
+</html>

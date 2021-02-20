@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/common_css_script :: common_head(~{::title}, ~{::link})">
+    <title>后台新增标签页面</title>
+    <link rel="stylesheet" href="../../static/admin/css/tags_input.css" th:href="@{/admin/css/tags_input.css}">
+</head>
+<body>
+<!--导航-->
+<nav th:replace="common/comman_adminnav :: menu(0)"></nav>
+<!--二级导航-->
+<div th:replace="common/comman_adminnav :: menu1(3)"></div>
+
+<!--主体内容-->
+<div class="mainContent-padding blog-input-main-area-width">
+    <div class="ui container">
+        <br>
+        <br>
+        <form action="#" method="post" th:object="${tag}"
+              th:action="*{id} == 0 ? @{/admin/saveTag} : @{/admin/saveTag/{id}(id = *{id})}"
+              class="ui form">
+
+            <input type="hidden" name="id" th:value="*{id}">
+            <!--博客名称-->
+            <div class="required field">
+                <div class="ui left labeled input">
+                    <div class="ui teal basic label">标签名称</div>
+                    <input type="text" name="name" placeholder="请输入标签名称" th:value="*{name}">
+                </div>
+            </div>
+
+
+            <!--表单验证--错误信息-->
+            <div class="ui error message"></div>
+
+            <!--后端非空验证--错误信息-->
+            <!--/*/
+            <div class="ui mini negative message" th:if="${#fields.hasErrors('name')}">
+                <i class="close icon"></i>
+                <div class="header">验证失败： </div>
+                <p th:errors="*{name}">标签名称不能为空</p>
+            </div>
+            /*/-->
+
+            <!--博客发布按钮-->
+            <div class="ui right aligned container">
+                <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                <button class="ui teal submit button">添加</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!--底部footer-->
+<footer th:replace="common/common_footer :: footer"></footer>
+
+<!--公用JS-->
+<th:block th:replace="common/common_css_script :: script">
+</th:block>
+
+<!-- 手机端sidebar显示菜单-->
+<script>
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('mobile-hide-nav');
+    });
+
+    $('.ui.dropdown')
+        .dropdown({
+            on: 'hover'
+        });
+    //前端非空验证
+    $('.ui.form').form({
+        fields: {
+            title: {
+                identifier: 'name',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入标签名称'
+                }]
+            }
+        }
+    });
+    //前端非空验证 End
+</script>
+</body>
+</html>

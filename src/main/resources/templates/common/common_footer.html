@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>公有footer</title>
+</head>
+<body>
+<footer th:fragment="footer" class="ui inverted vertical segment main-page-padding-footer">
+    <div class="ui center aligned container">
+        <div class="ui inverted stackable grid">
+            <div class="row">
+                <div class="two wide column">
+                    <p class="font-style">微信:</p>
+                    <img src="../../static/images/wechat_scan.jpg" th:src="@{/images/wechat_scan.jpg}" alt=""
+                         class="ui rounded image" style="width: 100px;">
+                </div>
+                <div class="two wide column">
+                    <p class="font-style">QQ:</p>
+                    <img src="../../static/images/wechat_scan.jpg" th:src="@{/images/wechat_scan.jpg}" alt=""
+                         class="ui rounded image" style="width: 100px;">
+                </div>
+                <div class="eight wide column">
+                    <h3>其他实用链接</h3>
+                    <p class="footer-link">Java书籍</p>
+                    <p class="footer-link">Leetcode题解</p>
+                    <p class="footer-link">Html网页模板</p>
+                    <br>
+                    <p class="footer-link">简历模板生成</p>
+                    <p class="footer-link">简历模板生成</p>
+                    <p class="footer-link">简历模板生成</p>
+                    <br>
+                    <p class="footer-link">简历模板生成</p>
+                    <p class="footer-link">简历模板生成</p>
+                    <p class="footer-link">简历模板生成</p>
+                </div>
+                <div class="four wide column">
+                    <div class="ui inverted link list">
+                        <br>
+                        <p class="font-style">你知道的越多，你不知道的就越多</p>
+                        <p class="font-style">学海无涯，回头是岸</p>
+                        <p class="font-style">不经历脱发，怎能当老大</p>
+                        <p class="font-style">珍爱头发，远离编程</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui inverted section divider"></div>
+        <p style="opacity: 0.7 !important;">Copyright ©2020-2021 Designed by 快乐的石小胖 </p>
+        <a href="http://beian.miit.gov.cn" target="_blank"><p>吉ICP备2020007513号-1</p></a>
+    </div>
+</footer>
+</body>
+</html>

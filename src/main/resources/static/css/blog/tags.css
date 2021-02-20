@@ -1,0 +1,25 @@
+
+/* 标签页相关css*/
+
+.tags-main-area-width {
+  max-width: 60em !important;
+  margin: auto !important;
+}
+
+.tags-total-number {
+  display: inline-block !important;
+  color: #2185d0;
+}
+
+.tags-article-content-text {
+  font-weight: 400 !important;
+  letter-spacing: 1px !important;
+  line-height: 1.5;
+}
+
+@media screen and (max-width: 768px) {
+  .m-mobile-lr-clear{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

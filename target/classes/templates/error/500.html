@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/common_css_script :: common_head(~{::title}, ~{})">
+    <title>500错误页面</title>
+</head>
+<body>
+
+<!--导航-->
+<nav th:replace="common/common_nav :: menu(0)"></nav>
+<div class="m-container-small">
+    <div class="m-padded-tb-massive">
+        <div class="ui error message">
+            <div class="ui container">
+                <h2>500</h2>
+                <p>server issue</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--底部footer-->
+<footer th:replace="common/common_footer :: footer"></footer>
+
+<!--公用JS-->
+<th:block th:replace="common/common_css_script :: script">
+</th:block>
+</body>
+</html>

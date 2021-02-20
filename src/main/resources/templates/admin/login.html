@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/common_css_script :: common_head(~{::title}, ~{})">
+    <title>后台登录页面</title>
+</head>
+<body>
+
+<br>
+<br>
+<br>
+<br>
+<div class="m-container-small m-padded-tb-massive" style="max-width: 30em !important;">
+    <div class="ui container">
+        <div class="column">
+            <h2 class="ui teal image header">
+                <div class="content">
+                    后台登录页面
+                </div>
+            </h2>
+            <form class="ui large form" method="post" th:action="@{admin/login}">
+                <div class="ui segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="username" placeholder="用户名">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="password" placeholder="密码">
+                        </div>
+                    </div>
+                    <button class="ui fluid large teal submit button">登  录</button>
+                </div>
+                <!--表单验证的错误信息放在这里-->
+                <div class="ui error mini message"></div>
+                <!--用户名密码错误的错误信息-->
+                <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}">用户名和密码错误</div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!--公用JS-->
+<th:block th:replace="common/common_css_script :: script">
+</th:block>
+
+<script>
+    $('.ui.form').form({
+        fields: {
+            username: {
+                identifier: 'username',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入用户名'
+                }]
+            },
+            password: {
+                identifier: 'password',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入密码'
+                }]
+            }
+        }
+    });
+</script>
+</body>
+</html>
