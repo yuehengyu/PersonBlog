@@ -25,7 +25,7 @@ import javax.validation.Valid;
 public class TagController {
 
     @Autowired
-    TagsService tagsService;
+    private TagsService tagsService;
 
 
     /**

@@ -4,6 +4,8 @@ import com.yhy.blog.bean.Type;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * 后台分类业务层接口
  */
@@ -29,6 +31,12 @@ public interface CategoryService {
      * @return 包含了数据的分页对象
      */
     Page<Type> listType(Pageable pageable);
+
+    /**
+     * 获取所有分类，在博客列表页初始化时使用
+     * @return 所有的分类
+     */
+    List<Type> listType();
 
     /**
      * 修改分类

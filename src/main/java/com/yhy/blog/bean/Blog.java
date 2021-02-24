@@ -16,6 +16,9 @@ public class Blog {
     private long id;
 
     private String title;//文章标题
+
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
     private String content;//文章内容
     private String firstPicture;//首页图片
     private String flag; //转载 - 原创
@@ -23,7 +26,7 @@ public class Blog {
     private boolean appreciation;//是否赞赏
     private boolean shareStatement;//是否开启转载声明
     private boolean commentable;//是否开启评论
-    private boolean published;//是否发布
+    private boolean published;//是否发布- 0:false 不发布只保存， 1:true 发布
     private boolean recommend;//是否推荐
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -44,6 +47,11 @@ public class Blog {
     @OneToMany(mappedBy = "blog")
     private List<Comment> comments = new ArrayList<>();
 
+
+    @Transient
+    private String tagIds; //包含了所选标签IDs的数组
+
+    private String description; //博客描述，用来在前端显示
 
     public Blog() {
     }
@@ -184,6 +192,46 @@ public class Blog {
         this.type = type;
     }
 
+
+    public String getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(String tagIds) {
+        this.tagIds = tagIds;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void initTagIds() {
+        this.tagIds = this.tagToIds(this.getTags());
+    }
+
+    private String tagToIds(List<Tag> tags) {
+        if (!tags.isEmpty()) {
+            StringBuilder ids = new StringBuilder();
+            boolean flag = false;
+            for (Tag tag : tags) {
+                if (flag) {
+                    ids.append(",");
+                } else {
+                    flag = true;
+                }
+                ids.append(tag.getId());
+            }
+            return ids.toString();
+        } else {
+            return tagIds;
+        }
+    }
+
+
     @Override
     public String toString() {
         return "Blog{" +
@@ -200,6 +248,12 @@ public class Blog {
                 ", recommend=" + recommend +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", type=" + type +
+                ", tags=" + tags +
+                ", user=" + user +
+                ", comments=" + comments +
+                ", tagIds='" + tagIds + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

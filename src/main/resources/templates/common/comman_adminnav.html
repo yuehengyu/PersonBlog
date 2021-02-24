@@ -12,15 +12,19 @@
             <h2 class="ui white header item" style="font-style: italic;">
                 Temasdw
             </h2>
-            <a href="/admin/blog" th:href="@{/admin/blogs}" class="m-item item mobile-hide-nav" th:classappend="${n==1}?'active'"><i
+            <a href="/admin/blog" th:href="@{/admin/blogs}" class="m-item item mobile-hide-nav"
+               th:classappend="${n==1}?'active'"><i
                     class="home icon"></i>博客</a>
-            <a href="#" th:href="@{/admin/category}" class="m-item item mobile-hide-nav" th:classappend="${n==2}?'active'"><i class="idea icon"></i>文章分类</a>
-            <a href="#" th:href="@{/admin/tags}" class="m-item item mobile-hide-nav" th:classappend="${n==3}?'active'"><i class="tags icon"></i>标签</a>
+            <a href="#" th:href="@{/admin/category}" class="m-item item mobile-hide-nav"
+               th:classappend="${n==2}?'active'"><i class="idea icon"></i>文章分类</a>
+            <a href="#" th:href="@{/admin/tags}" class="m-item item mobile-hide-nav"
+               th:classappend="${n==3}?'active'"><i class="tags icon"></i>标签</a>
 
             <div class="right m-item mobile-hide-nav menu">
                 <div class="ui dropdown item">
-                    <div class="text"><img class="ui avatar image" src="https://picsum.photos/id/100/100/100"
-                                           th:if="${session.user!=null}" th:text="${session.user.nickname}"></div>
+                    <div class="text"><img class="ui avatar image"
+                                           th:if="${session.user!=null}" th:src="@{${session.user.avatar}}"
+                                           th:text="${session.user.nickname}"></div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         <a href="#" th:href="@{/admin/logout}" class="item">注销</a>
@@ -39,8 +43,8 @@
 <div th:fragment="menu1(n)" class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" th:href="@{/admin/category/addCategory}" class="item" th:classappend="${n==1}?'active'">发布博客</a>
-            <a href="#" th:href="@{/admin/category/addCategory}" class="item" th:classappend="${n==2}?'active'">博客列表</a>
+            <a href="#" th:href="@{/admin/blogs/createBlog}" class="item" th:classappend="${n==1}?'active'">发布博客</a>
+            <a href="#" th:href="@{/admin/blogs}" class="item" th:classappend="${n==2}?'active'">博客列表</a>
             <a href="#" th:href="@{/admin/tags/addTag}" class="item" th:classappend="${n==3}?'active'">新增标签</a>
             <a href="#" th:href="@{/admin/tags}" class="item" th:classappend="${n==4}?'active'">标签列表</a>
             <a href="#" th:href="@{/admin/category/addCategory}" class="item" th:classappend="${n==5}?'active'">新增分类</a>

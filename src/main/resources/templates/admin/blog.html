@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/common_css_script :: common_head(~{::title}, ~{::link})">
-  <title>后台管理-博客列表页面</title>
-  <link rel="stylesheet" href="../../static/admin/css/blog.css" th:href="@{/admin/css/index.css}">
+    <title>后台管理-博客列表页面</title>
+    <link rel="stylesheet" href="../../static/admin/css/blog.css" th:href="@{/admin/css/blog.css}">
 </head>
 <body>
 <!--导航-->
@@ -12,86 +12,111 @@
 
 <!--主体内容-->
 <div class="mainContent-padding index-main-area-width">
-  <div class="ui container">
-    <form action="#" method="post" class="ui segment form">
-      <div class="inline fields">
-        <div class="field">
-          <input type="text" name="title" placeholder="标题">
-        </div>
-        <div class="field">
-          <div class="ui selection dropdown">
-            <input type="hidden" name="type">
-            <i class="dropdown icon"></i>
-            <div class="default text">分类</div>
-            <div class="menu">
-              <div class="item" data-value="1">日志</div>
-              <div class="item" data-value="2">开发者手册</div>
+    <div class="ui container">
+        <div class="ui secondary segment form">
+            <!--分页查询时，将页码和查询条件一起传给controller层-->
+            <input type="hidden" name="page">
+
+            <div class="inline fields">
+                <div class="field">
+                    <input type="text" name="title" placeholder="标题">
+                </div>
+                <div class="field">
+                    <div class="ui labeled action input">
+                        <div class="ui type selection dropdown">
+                            <input type="hidden" name="typeId">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">分类</div>
+                            <div class="menu">
+                                <div th:each="type: ${types}" class="item" data-value="1" th:data-value="${type.id}"
+                                     th:text="${type.name}">日志
+                                </div>
+                            </div>
+                        </div>
+                        <button id="clear-btn" class="ui compact button">clear</button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="recommend" name="recommend">
+                        <label for="recommend">推荐</label>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <button type="button" id="search-btn" class="ui mini teal basic button">
+                        <i class="search icon"></i>搜索
+                    </button>
+                </div>
+
+                <div class="field">
+                    <a href="#" th:href="@{/admin/blogs/createBlog}" class="ui mini teal button">新增博客</a>
+                </div>
+
             </div>
-          </div>
         </div>
 
-        <div class="field">
-          <div class="ui checkbox">
-            <input type="checkbox" id="recommend" name="recommend">
-            <label for="recommend">推荐</label>
-          </div>
+        <div id="table-container">
+            <table th:fragment="blogList" class="ui compact teal table">
+                <!--表头-->
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>文章标题</th>
+                    <th>文章分类</th>
+                    <th>推荐</th>
+                    <th>创建时间</th>
+                    <th>更新时间</th>
+                    <th>状态</th>
+                    <th>是否原创</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+
+                <!--列表内容-->
+                <tbody>
+                <tr th:each="blog, iterState : ${page.content}">
+                    <td th:text="${iterState.count}"></td>
+                    <td th:text="${blog.title}">你不是真正的快乐</td>
+                    <td th:text="${blog.type.name}">情感天地</td>
+                    <td th:text="${blog.recommend} ? '是' : '否'">否</td>
+                    <td th:text="${blog.createTime}">2020-11-22</td>
+                    <td th:text="${blog.updateTime}">2020-11-22</td>
+                    <td th:text="${blog.published} ? '已发布' : '未发布'"></td>
+                    <td th:text="${blog.shareStatement} ? '转载' : '原创'"></td>
+                    <td>
+                        <a href="#" th:href="@{/admin/blogs/{id}/updateBlog(id = ${blog.id})}"
+                           class="ui mini teal button">编辑</a>
+                        <a href="#" th:href="@{/admin/blogs/{id}/delete(id = ${blog.id})}"
+                           class="ui mini red button">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+                <!--底部分页按钮-->
+                <tfoot>
+                <tr>
+                    <th colspan="9">
+                        <div class="ui mini pagination menu" th:if="${page.totalPages>1}">
+                            <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item"
+                               th:unless="${page.first}">上一页</a>
+                            <a onclick="page(this)" th:attr="data-page=${page.number}+1" class=" item"
+                               th:unless="${page.last}">下一页</a>
+                        </div>
+                    </th>
+                </tr>
+                </tfoot>
+
+            </table>
+
+            <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                <i class="close icon"></i>
+                <div class="header">提示：</div>
+                <p th:text="${message}">恭喜，新增博客成功！</p>
+            </div>
+
         </div>
-
-        <div class="field">
-          <button class="ui mini teal basic button">
-            <i class="search icon"></i>搜索
-          </button>
-        </div>
-
-        <div class="field">
-          <a href="#" class="ui mini teal button">新增</a>
-        </div>
-
-      </div>
-    </form>
-
-
-    <table class="ui celled table">
-      <!--表头-->
-      <thead>
-      <tr>
-        <th></th>
-        <th>文章标题</th>
-        <th>文章类型</th>
-        <th>推荐</th>
-        <th>更新时间</th>
-        <th>操作</th>
-      </tr>
-      </thead>
-
-      <!--列表内容-->
-      <tbody>
-      <tr>
-        <td>1</td>
-        <td>你不是真正的快乐</td>
-        <td>情感天地</td>
-        <td>否</td>
-        <td>2020-11-22</td>
-        <td>
-          <a href="#" class="ui mini teal button">编辑</a>
-          <a href="#" class="ui mini red button">删除</a>
-        </td>
-      </tr>
-      </tbody>
-      <!--底部分页按钮-->
-      <tfoot>
-      <tr>
-        <th colspan="6">
-          <div class="ui mini pagination menu">
-            <a href="#" class="item">上一页</a>
-            <a href="#" class="item">下一页</a>
-          </div>
-        </th>
-      </tr>
-      </tfoot>
-
-    </table>
-  </div>
+    </div>
 </div>
 
 <!--底部footer-->
@@ -101,17 +126,53 @@
 <th:block th:replace="common/common_css_script :: script">
 </th:block>
 
-<!-- 手机端sidebar显示菜单-->
 <script>
-  $('.menu.toggle').click(function () {
-    $('.m-item').toggleClass('mobile-hide-nav');
-  });
+    // 手机端 sidebar显示菜单
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('mobile-hide-nav');
+    });
 
-  $('.ui.dropdown')
-    .dropdown({
-      on: 'hover'
-    })
-  ;
+    $('.ui.dropdown')
+        .dropdown({
+            on: 'hover'
+        });
+
+    // page方法来对分页按钮进行赋值
+    function page(obj) {
+        $("[name='page']").val($(obj).data("page"));
+        loadData();
+    }
+
+    //消息提示关闭初始化
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+
+    // 搜索按钮的方法
+    $("#search-btn").click(function () {
+        $("[name='page']").val(0);
+        loadData();
+    });
+
+    // 使用Ajax方法去发送form表单，而不是直接将整个表单提交
+    function loadData() {
+        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search", {
+            title: $("[name='title']").val(),
+            typeId: $("[name='typeId']").val(),
+            recommend: $("[name='recommend']").prop('checked'),
+            page: $("[name='page']").val()
+        });
+    }
+    // 清除下拉框的分类条件
+    $('#clear-btn')
+        .on('click', function () {
+            $('.ui.type.dropdown')
+                .dropdown('clear')
+            ;
+        });
 </script>
 </body>
 </html>

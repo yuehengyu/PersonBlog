@@ -5,6 +5,8 @@ import com.yhy.blog.bean.Type;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * 后台标签业务层接口
  */
@@ -32,6 +34,12 @@ public interface TagsService {
     Page<Tag> listTags(Pageable pageable);
 
     /**
+     * 查询所有标签
+     * @return 包含了标签数据的分页对象
+     */
+    List<Tag> listTags();
+
+    /**
      * 修改标签
      * @param id 分类ID
      * @param tag 包含了要修改的标签内容
@@ -51,6 +59,13 @@ public interface TagsService {
      * @return 获取到的tag对象
      */
     Tag getTagByName(String name);
+
+    /**
+     * 根据一组ID查询所有相关的标签
+     * @param ids 标签集合 eg: 1,2,3,4
+     * @return ID所对应的标签集合
+     */
+    List<Tag> listTag(String ids);
 
 
 }

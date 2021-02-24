@@ -11,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class TagsServiceImpl implements TagsService {
 
@@ -33,6 +36,11 @@ public class TagsServiceImpl implements TagsService {
     }
 
     @Override
+    public List<Tag> listTags() {
+        return tagsRepository.findAll();
+    }
+
+    @Override
     public Tag updateTag(Long id, Tag tag) {
         Tag t = tagsRepository.findById(id).get();
         if (t == null) {
@@ -50,5 +58,17 @@ public class TagsServiceImpl implements TagsService {
     @Override
     public Tag getTagByName(String name) {
         return tagsRepository.findByName(name);
+    }
+
+    @Override
+    public List<Tag> listTag(String ids) {
+        List<Long> list = new ArrayList<>();
+        if (!"".equals(ids) && ids != null) {
+            String[] idArr = ids.split(",");
+            for (int i = 0; i < idArr.length; i++) {
+                list.add(Long.valueOf(idArr[i]));
+            }
+        }
+        return tagsRepository.findAllById(list);
     }
 }

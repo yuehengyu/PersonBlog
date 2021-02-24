@@ -27,7 +27,7 @@ import javax.validation.Valid;
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     /**
      * 获取分类列表
