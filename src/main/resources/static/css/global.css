@@ -143,6 +143,11 @@ body {
   background-color: #0c3d6161;
 }
 
+.m-teal {
+  color: #00b5ad; !important;
+  font-size: 1.2em;
+}
+
 .ui.secondary.inverted.menu .link.item, .ui.secondary.inverted.menu a.item {
   color: #ffffff !important;
 }

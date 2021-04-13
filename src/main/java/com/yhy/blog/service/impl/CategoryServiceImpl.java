@@ -7,7 +7,9 @@ import com.yhy.blog.service.CategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,5 +64,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Type getTypeByName(String name) {
         return categoryRepository.findByName(name);
+    }
+
+    @Override
+    public List<Type> listTopType(Integer size) {
+        Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "blogs.size"));
+        return categoryRepository.findTopTypes(pageable);
     }
 }

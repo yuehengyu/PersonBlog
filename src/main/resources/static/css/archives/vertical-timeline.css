@@ -7,6 +7,15 @@
     Issues: https://github.com/RyanFitzgerald/vertical-timeline/issues
 	LICENSE: MIT
 */
+
+a{
+  color: black;
+}
+
+a:hover {
+  color: #4183c4;
+}
+
 .vtimeline {
   position: relative;
   padding: 30px;

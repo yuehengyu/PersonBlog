@@ -78,13 +78,13 @@
                 <tbody>
                 <tr th:each="blog, iterState : ${page.content}">
                     <td th:text="${iterState.count}"></td>
-                    <td th:text="${blog.title}">你不是真正的快乐</td>
-                    <td th:text="${blog.type.name}">情感天地</td>
-                    <td th:text="${blog.recommend} ? '是' : '否'">否</td>
-                    <td th:text="${blog.createTime}">2020-11-22</td>
-                    <td th:text="${blog.updateTime}">2020-11-22</td>
-                    <td th:text="${blog.published} ? '已发布' : '未发布'"></td>
-                    <td th:text="${blog.shareStatement} ? '转载' : '原创'"></td>
+                    <td th:text="${blog.title}">文章标题</td>
+                    <td th:text="${blog.type.name}">分类名称</td>
+                    <td th:text="${blog.recommend} ? '是' : '否'">是否推荐</td>
+                    <td th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd hh:mm:ss')}">创建日期</td>
+                    <td th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd hh:mm:ss')}">更新日期</td>
+                    <td th:text="${blog.published} ? '已发布' : '未发布'">是否发布</td>
+                    <td th:text="${blog.shareStatement} ? '转载' : '原创'">是否原创</td>
                     <td>
                         <a href="#" th:href="@{/admin/blogs/{id}/updateBlog(id = ${blog.id})}"
                            class="ui mini teal button">编辑</a>

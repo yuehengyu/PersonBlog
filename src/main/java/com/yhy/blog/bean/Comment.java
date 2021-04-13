@@ -37,6 +37,8 @@ public class Comment {
     @ManyToOne
     private Comment parentComment;
 
+    private boolean isAdmin;
+
 
     public Comment() {
     }
@@ -109,6 +111,14 @@ public class Comment {
         return createTime;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
@@ -121,6 +131,11 @@ public class Comment {
                 ", email='" + email + '\'' +
                 ", content='" + content + '\'' +
                 ", avatar='" + avatar + '\'' +
+                ", createTime=" + createTime +
+                ", blog=" + blog +
+                ", replyComments=" + replyComments +
+                ", parentComment=" + parentComment +
+                ", isAdmin=" + isAdmin +
                 '}';
     }
 }

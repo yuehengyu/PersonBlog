@@ -1,7 +1,6 @@
 package com.yhy.blog.service;
 
 import com.yhy.blog.bean.Tag;
-import com.yhy.blog.bean.Type;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -67,5 +66,11 @@ public interface TagsService {
      */
     List<Tag> listTag(String ids);
 
+    /**
+     * 根据标签内包含的博客数量 返回前n个标签
+     * @param size n的大小
+     * @return 前n个标签
+     */
+    List<Tag> listTopType(Integer size);
 
 }

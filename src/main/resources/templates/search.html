@@ -1,43 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/common_css_script :: common_head(~{::title}, ~{::link})">
-    <title>文章分类页面</title>
-    <link rel="stylesheet" href="../static/css/blog/category.css" th:href="@{/css/blog/category.css}">
+    <title>搜索结果页面</title>
+    <link rel="stylesheet" href="../static/css/blog/search.css" th:href="@{/css/blog/search.css}">
 </head>
 <body>
 <!--导航-->
-<nav th:replace="common/common_nav :: menu(2)"></nav>
+<nav th:replace="common/common_nav :: menu(0)"></nav>
 
 <!--主体内容-->
-<div class="mainContent-padding category-main-area-width">
+<div class="mainContent-padding tags-main-area-width">
     <div class="ui container">
         <!--分类列表头部-->
         <div class="ui top attached segment">
             <div class="ui middle aligned two column grid">
                 <div class="column">
-                    <h3 class="ui header" style="color: #677686">分类列表</h3>
+                    <h3 class="ui header" style="color: #677686">搜索结果</h3>
                 </div>
 
                 <div class="right aligned column">
-                    <h3 class="ui header" style="color: #677686">共 <p class="category-total-number"
-                                                                      th:text="${#arrays.length(categories)}">分类总数</p> 个
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <!--分类list区域-->
-        <div class="ui attached segment m-padding-tb-large">
-            <div class="ui labeled button m-margin-tiny" th:each="category: ${categories}">
-                <a href="#" th:href="@{/categories/{categoryId}(categoryId=${category.id})}" class="ui button"
-                   th:classappend="${category.id == activeCategoryId} ? 'teal'" th:text="${category.name}">分类名称</a>
-                <div class="ui basic left pointing label" th:classappend="${category.id == activeCategoryId} ? 'teal'"
-                     th:text="${#arrays.length(category.blogs)}">分类包含的博客数量
+                    <h3 class="ui header" style="color: #677686">共 <p class="tags-total-number" th:text="${page.totalElements}">相关文章数</p> 篇</h3>
                 </div>
             </div>
         </div>
 
         <!--选中分类的文章列表-->
-        <div class="ui top attached segment">
+        <div class="ui attached segment">
             <div class="ui padded segment m-mobile-lr-clear" th:each="blog: ${page.content}">
                 <div class="ui mobile reversed stackable grid">
                     <!--文章内容-->
@@ -69,7 +57,7 @@
                                     </div>
                                     <!--访客数量量-->
                                     <div class="item">
-                                        <i class="eye icon"></i>&nbsp;<span th:text="${blog.views}">浏览次数</span>
+                                        <i class="eye icon"></i><span th:text="${blog.views}">浏览次数</span>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +79,7 @@
             </div>
         </div>
 
-        <!-- 文章底部翻页按钮-->
+        <!-- 文章底部分页按钮-->
         <div class="ui bottom attached segment" th:if="${page.totalPages>1}">
             <div class="ui center aligned two column grid">
                 <div class="column">

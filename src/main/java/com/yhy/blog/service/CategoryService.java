@@ -59,5 +59,11 @@ public interface CategoryService {
      */
     Type getTypeByName(String name);
 
+    /**
+     * 返回前n个文章分类
+     * @param size n的大小
+     * @return 前n个文章分类名称
+     */
+    List<Type> listTopType(Integer size);
 
 }

@@ -15,6 +15,10 @@ public class WebConfig implements WebMvcConfigurer {
         // 拦截admin开头的所有请求， 但是需要排除掉login请求
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/admin/*")
+                .addPathPatterns("/admin/blogs/createBlog")
+                .addPathPatterns("/admin/blogs/*/updateBlog")
+                .addPathPatterns("admin/tags/addTag")
+                .addPathPatterns("/admin/category/addCategory")
                 .excludePathPatterns("/admin") //排除login请求
                 .excludePathPatterns("/admin/login"); //排除login请求
 

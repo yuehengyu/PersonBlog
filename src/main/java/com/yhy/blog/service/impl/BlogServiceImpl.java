@@ -5,20 +5,20 @@ import com.yhy.blog.bean.Type;
 import com.yhy.blog.dao.BlogRepository;
 import com.yhy.blog.handler.NoResourceFoundException;
 import com.yhy.blog.service.BlogService;
+import com.yhy.blog.util.MarkdownUtils;
 import com.yhy.blog.util.MyBeanUtils;
 import com.yhy.blog.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +34,21 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog getBlogById(Long id) {
         return blogRepository.findById(id).get();
+    }
+
+    @Override
+    @Transactional
+    public Blog getBlogAndConvertMarkdown(Long id) {
+        Blog blog = blogRepository.findById(id).get();
+        if (blog == null) {
+            throw new NoResourceFoundException("找不到对应博客");
+        }
+        Blog b = new Blog();
+        BeanUtils.copyProperties(blog, b);
+        String content = b.getContent();
+        b.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+        blogRepository.updateViews(id);
+        return b;
     }
 
     @Override
@@ -55,6 +70,17 @@ public class BlogServiceImpl implements BlogService {
                 }
                 criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
                 return null;
+            }
+        }, pageable);
+    }
+
+    @Override
+    public Page<Blog> getAllBlogsByTagId(Pageable pageable, Long tagId) {
+        return blogRepository.findAll(new Specification<Blog>() {
+            @Override
+            public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                Join join = root.join("tags");
+                return criteriaBuilder.equal(join.get("id"), tagId);
             }
         }, pageable);
     }
@@ -85,8 +111,24 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Page<Blog> listAllBlogs(Pageable pageable) {
+        return blogRepository.findAll(pageable);
+    }
+
+    @Override
     @Transactional
     public void deleteBlog(Long id) {
         blogRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Blog> listRecommendBlogs(Integer size) {
+        Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "updateTime"));
+        return blogRepository.findTopBlogs(pageable);
+    }
+
+    @Override
+    public Page<Blog> listQueryBlog(String query, Pageable pageable) {
+        return blogRepository.findByQuery(query, pageable);
     }
 }

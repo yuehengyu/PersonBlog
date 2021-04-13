@@ -19,56 +19,31 @@
                 </div>
 
                 <div class="right aligned column">
-                    <h3 class="ui header" style="color: #677686">共 <p class="tags-total-number">14</p> 个</h3>
+                    <h3 class="ui header" style="color: #677686">共 <p class="tags-total-number"
+                                                                      th:text="${#arrays.length(tags)}">标签总数</p> 个
+                    </h3>
                 </div>
             </div>
         </div>
         <!--分类list区域-->
         <div class="ui attached segment m-padding-tb-large">
-            <a href="#" class="ui teal left pointing label large m-margin-tb-mini">
-                美食推荐
-                <div class="detail">33</div>
-            </a>
-            <a href="#" class="ui left pointing label large m-margin-tb-mini">
-                Java算法
-                <div class="detail">33</div>
-            </a>
-            <a href="#" class="ui left pointing label large m-margin-tb-mini">
-                Java算法
-                <div class="detail">33</div>
-            </a>
-            <a href="#" class="ui left pointing label large m-margin-tb-mini">
-                Java算法
-                <div class="detail">33</div>
-            </a>
-            <a href="#" class="ui left pointing label large m-margin-tb-mini">
-                Java算法
-                <div class="detail">33</div>
-            </a>
-            <a href="#" class="ui left pointing label large m-margin-tb-mini">
-                Java算法
-                <div class="detail">33</div>
-            </a>
-            <a href="#" class="ui left pointing label large m-margin-tb-mini">
-                Java算法
-                <div class="detail">33</div>
-            </a>
-            <a href="#" class="ui left pointing label large m-margin-tb-mini">
-                Java算法
-                <div class="detail">33</div>
+            <a href="#" th:href="@{/tags/{tagId}(tagId=${tag.id})}" class="ui left pointing label large m-margin-tb-mini"
+               th:each="tag:${tags}" th:classappend="${tag.id == activeTagId} ? 'teal'">
+                <span th:text="${tag.name}">标签名称</span>
+                <div class="detail" th:text="${#arrays.length(tag.blogs)}">标签包含的博客数量</div>
             </a>
         </div>
 
         <!--选中分类的文章列表-->
         <div class="ui top attached segment">
-            <div class="ui padded segment m-mobile-lr-clear">
+            <div class="ui padded segment m-mobile-lr-clear" th:each="blog: ${page.content}">
                 <div class="ui mobile reversed stackable grid">
                     <!--文章内容-->
                     <div class="eleven wide column">
-                        <h3 class="ui header">你不是真正的快乐</h3>
-                        <p class="tags-article-content-text">
-                            你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐....</p>
-
+                        <h3 class="ui header"><a class="m-black" href="#" target="_blank"
+                                                 th:href="@{/blog/{id}(id=${blog.id})}" th:text="${blog.title}">文章标题</a>
+                        </h3>
+                        <p class="tags-article-content-text" th:text="|${blog.description}......|">文章描述</p>
 
                         <div class="ui stackable grid">
                             <!--作者头像，名字，文章发表时间以及点击量-->
@@ -77,34 +52,40 @@
                                     <div class="ui mini horizontal link list">
                                         <div class="item">
                                             <!--作者头像-->
-                                            <img class="ui avatar image" src="https://picsum.photos/id/100/100/100">
+                                            <img class="ui avatar image" src="https://picsum.photos/id/100/100/100"
+                                                 th:src="${blog.user.avatar}">
                                             <!--作者名字-->
                                             <div class="content">
                                                 <div class="header">
-                                                    <a href="#">Henry</a>
+                                                    <a href="#" th:text="${blog.user.nickname}">作者名称</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <!--文章发表时间-->
                                         <div class="item">
-                                            <i class="calendar icon"></i>2020-11-04
+                                            <i class="calendar icon"></i><span
+                                                th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">更新日期</span>
                                         </div>
                                         <!--访客数量量-->
                                         <div class="item">
-                                            <i class="eye icon"></i>521
+                                            <i class="eye icon"></i>&nbsp;<span th:text="${blog.views}">浏览次数</span>
                                         </div>
                                     </div>
                                 </div>
-                                <!--文章标签-->
+                                <!--文章分类-->
                                 <div class="right aligned five wide column">
-                                    <a href="#" class="ui teal label label-padding-mini text-thin">美食广场</a>
+                                    <a href="#" th:href="@{/categories/{categoryId}(categoryId=${blog.type.id})}"
+                                       class="ui teal label m-padded-small text-thin"
+                                       th:text="${blog.type.name}">文章分类</a>
                                 </div>
                             </div>
                             <!--文章标签-->
                             <div class="row">
                                 <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-tiny"
-                                       style="font-weight: 400">美食天地</a>
+                                    <a href="#" th:href="@{/tags/{tagId}(tagId=${tag.id})}"
+                                       class="ui basic left pointing label m-padded-tiny"
+                                       th:classappend="${tag.id == activeTagId} ? 'teal'"
+                                       style="font-weight: 400" th:each="tag:${blog.tags}" th:text="${tag.name}">文章标签列表名称</a>
                                 </div>
 
                             </div>
@@ -112,473 +93,9 @@
                     </div>
                     <!--文章配图-->
                     <div class="five wide column">
-                        <a href="#" target="_blank">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
                             <img class="ui rounded image"
-                                 src="https://picsum.photos/id/1/800/500">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="ui padded segment m-mobile-lr-clear">
-                <div class="ui mobile reversed stackable grid">
-                    <!--文章内容-->
-                    <div class="eleven wide column">
-                        <h3 class="ui header">你不是真正的快乐</h3>
-                        <p class="tags-article-content-text">
-                            你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐....</p>
-
-
-                        <div class="ui stackable grid">
-                            <!--作者头像，名字，文章发表时间以及点击量-->
-                            <div class="row">
-                                <div class="eleven wide column">
-                                    <div class="ui mini horizontal link list">
-                                        <div class="item">
-                                            <!--作者头像-->
-                                            <img class="ui avatar image" src="https://picsum.photos/id/100/100/100">
-                                            <!--作者名字-->
-                                            <div class="content">
-                                                <div class="header">
-                                                    <a href="#">Henry</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--文章发表时间-->
-                                        <div class="item">
-                                            <i class="calendar icon"></i>2020-11-04
-                                        </div>
-                                        <!--访客数量量-->
-                                        <div class="item">
-                                            <i class="eye icon"></i>521
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--文章标签-->
-                                <div class="right aligned five wide column">
-                                    <a href="#" class="ui teal label label-padding-mini text-thin">美食广场</a>
-                                </div>
-                            </div>
-                            <!--文章标签-->
-                            <div class="row">
-                                <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-tiny"
-                                       style="font-weight: 400">美食天地</a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!--文章配图-->
-                    <div class="five wide column">
-                        <a href="#" target="_blank">
-                            <img class="ui rounded image"
-                                 src="https://picsum.photos/id/1/800/500">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="ui padded segment m-mobile-lr-clear">
-                <div class="ui mobile reversed stackable grid">
-                    <!--文章内容-->
-                    <div class="eleven wide column">
-                        <h3 class="ui header">你不是真正的快乐</h3>
-                        <p class="tags-article-content-text">
-                            你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐....</p>
-
-
-                        <div class="ui stackable grid">
-                            <!--作者头像，名字，文章发表时间以及点击量-->
-                            <div class="row">
-                                <div class="eleven wide column">
-                                    <div class="ui mini horizontal link list">
-                                        <div class="item">
-                                            <!--作者头像-->
-                                            <img class="ui avatar image" src="https://picsum.photos/id/100/100/100">
-                                            <!--作者名字-->
-                                            <div class="content">
-                                                <div class="header">
-                                                    <a href="#">Henry</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--文章发表时间-->
-                                        <div class="item">
-                                            <i class="calendar icon"></i>2020-11-04
-                                        </div>
-                                        <!--访客数量量-->
-                                        <div class="item">
-                                            <i class="eye icon"></i>521
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--文章标签-->
-                                <div class="right aligned five wide column">
-                                    <a href="#" class="ui teal label label-padding-mini text-thin">美食广场</a>
-                                </div>
-                            </div>
-                            <!--文章标签-->
-                            <div class="row">
-                                <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-tiny"
-                                       style="font-weight: 400">美食天地</a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!--文章配图-->
-                    <div class="five wide column">
-                        <a href="#" target="_blank">
-                            <img class="ui rounded image"
-                                 src="https://picsum.photos/id/1/800/500">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="ui padded segment m-mobile-lr-clear">
-                <div class="ui mobile reversed stackable grid">
-                    <!--文章内容-->
-                    <div class="eleven wide column">
-                        <h3 class="ui header">你不是真正的快乐</h3>
-                        <p class="tags-article-content-text">
-                            你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐....</p>
-
-
-                        <div class="ui stackable grid">
-                            <!--作者头像，名字，文章发表时间以及点击量-->
-                            <div class="row">
-                                <div class="eleven wide column">
-                                    <div class="ui mini horizontal link list">
-                                        <div class="item">
-                                            <!--作者头像-->
-                                            <img class="ui avatar image" src="https://picsum.photos/id/100/100/100">
-                                            <!--作者名字-->
-                                            <div class="content">
-                                                <div class="header">
-                                                    <a href="#">Henry</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--文章发表时间-->
-                                        <div class="item">
-                                            <i class="calendar icon"></i>2020-11-04
-                                        </div>
-                                        <!--访客数量量-->
-                                        <div class="item">
-                                            <i class="eye icon"></i>521
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--文章标签-->
-                                <div class="right aligned five wide column">
-                                    <a href="#" class="ui teal label label-padding-mini text-thin">美食广场</a>
-                                </div>
-                            </div>
-                            <!--文章标签-->
-                            <div class="row">
-                                <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-tiny"
-                                       style="font-weight: 400">美食天地</a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!--文章配图-->
-                    <div class="five wide column">
-                        <a href="#" target="_blank">
-                            <img class="ui rounded image"
-                                 src="https://picsum.photos/id/1/800/500">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="ui padded segment m-mobile-lr-clear">
-                <div class="ui mobile reversed stackable grid">
-                    <!--文章内容-->
-                    <div class="eleven wide column">
-                        <h3 class="ui header">你不是真正的快乐</h3>
-                        <p class="tags-article-content-text">
-                            你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐....</p>
-
-
-                        <div class="ui stackable grid">
-                            <!--作者头像，名字，文章发表时间以及点击量-->
-                            <div class="row">
-                                <div class="eleven wide column">
-                                    <div class="ui mini horizontal link list">
-                                        <div class="item">
-                                            <!--作者头像-->
-                                            <img class="ui avatar image" src="https://picsum.photos/id/100/100/100">
-                                            <!--作者名字-->
-                                            <div class="content">
-                                                <div class="header">
-                                                    <a href="#">Henry</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--文章发表时间-->
-                                        <div class="item">
-                                            <i class="calendar icon"></i>2020-11-04
-                                        </div>
-                                        <!--访客数量量-->
-                                        <div class="item">
-                                            <i class="eye icon"></i>521
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--文章标签-->
-                                <div class="right aligned five wide column">
-                                    <a href="#" class="ui teal label label-padding-mini text-thin">美食广场</a>
-                                </div>
-                            </div>
-                            <!--文章标签-->
-                            <div class="row">
-                                <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-tiny"
-                                       style="font-weight: 400">美食天地</a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!--文章配图-->
-                    <div class="five wide column">
-                        <a href="#" target="_blank">
-                            <img class="ui rounded image"
-                                 src="https://picsum.photos/id/1/800/500">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="ui padded segment m-mobile-lr-clear">
-                <div class="ui mobile reversed stackable grid">
-                    <!--文章内容-->
-                    <div class="eleven wide column">
-                        <h3 class="ui header">你不是真正的快乐</h3>
-                        <p class="tags-article-content-text">
-                            你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐....</p>
-
-
-                        <div class="ui stackable grid">
-                            <!--作者头像，名字，文章发表时间以及点击量-->
-                            <div class="row">
-                                <div class="eleven wide column">
-                                    <div class="ui mini horizontal link list">
-                                        <div class="item">
-                                            <!--作者头像-->
-                                            <img class="ui avatar image" src="https://picsum.photos/id/100/100/100">
-                                            <!--作者名字-->
-                                            <div class="content">
-                                                <div class="header">
-                                                    <a href="#">Henry</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--文章发表时间-->
-                                        <div class="item">
-                                            <i class="calendar icon"></i>2020-11-04
-                                        </div>
-                                        <!--访客数量量-->
-                                        <div class="item">
-                                            <i class="eye icon"></i>521
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--文章标签-->
-                                <div class="right aligned five wide column">
-                                    <a href="#" class="ui teal label label-padding-mini text-thin">美食广场</a>
-                                </div>
-                            </div>
-                            <!--文章标签-->
-                            <div class="row">
-                                <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-tiny"
-                                       style="font-weight: 400">美食天地</a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!--文章配图-->
-                    <div class="five wide column">
-                        <a href="#" target="_blank">
-                            <img class="ui rounded image"
-                                 src="https://picsum.photos/id/1/800/500">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="ui padded segment m-mobile-lr-clear">
-                <div class="ui mobile reversed stackable grid">
-                    <!--文章内容-->
-                    <div class="eleven wide column">
-                        <h3 class="ui header">你不是真正的快乐</h3>
-                        <p class="tags-article-content-text">
-                            你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐....</p>
-
-
-                        <div class="ui stackable grid">
-                            <!--作者头像，名字，文章发表时间以及点击量-->
-                            <div class="row">
-                                <div class="eleven wide column">
-                                    <div class="ui mini horizontal link list">
-                                        <div class="item">
-                                            <!--作者头像-->
-                                            <img class="ui avatar image" src="https://picsum.photos/id/100/100/100">
-                                            <!--作者名字-->
-                                            <div class="content">
-                                                <div class="header">
-                                                    <a href="#">Henry</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--文章发表时间-->
-                                        <div class="item">
-                                            <i class="calendar icon"></i>2020-11-04
-                                        </div>
-                                        <!--访客数量量-->
-                                        <div class="item">
-                                            <i class="eye icon"></i>521
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--文章标签-->
-                                <div class="right aligned five wide column">
-                                    <a href="#" class="ui teal label label-padding-mini text-thin">美食广场</a>
-                                </div>
-                            </div>
-                            <!--文章标签-->
-                            <div class="row">
-                                <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-tiny"
-                                       style="font-weight: 400">美食天地</a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!--文章配图-->
-                    <div class="five wide column">
-                        <a href="#" target="_blank">
-                            <img class="ui rounded image"
-                                 src="https://picsum.photos/id/1/800/500">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="ui padded segment m-mobile-lr-clear">
-                <div class="ui mobile reversed stackable grid">
-                    <!--文章内容-->
-                    <div class="eleven wide column">
-                        <h3 class="ui header">你不是真正的快乐</h3>
-                        <p class="tags-article-content-text">
-                            你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐....</p>
-
-
-                        <div class="ui stackable grid">
-                            <!--作者头像，名字，文章发表时间以及点击量-->
-                            <div class="row">
-                                <div class="eleven wide column">
-                                    <div class="ui mini horizontal link list">
-                                        <div class="item">
-                                            <!--作者头像-->
-                                            <img class="ui avatar image" src="https://picsum.photos/id/100/100/100">
-                                            <!--作者名字-->
-                                            <div class="content">
-                                                <div class="header">
-                                                    <a href="#">Henry</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--文章发表时间-->
-                                        <div class="item">
-                                            <i class="calendar icon"></i>2020-11-04
-                                        </div>
-                                        <!--访客数量量-->
-                                        <div class="item">
-                                            <i class="eye icon"></i>521
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--文章标签-->
-                                <div class="right aligned five wide column">
-                                    <a href="#" class="ui teal label label-padding-mini text-thin">美食广场</a>
-                                </div>
-                            </div>
-                            <!--文章标签-->
-                            <div class="row">
-                                <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-tiny"
-                                       style="font-weight: 400">美食天地</a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!--文章配图-->
-                    <div class="five wide column">
-                        <a href="#" target="_blank">
-                            <img class="ui rounded image"
-                                 src="https://picsum.photos/id/1/800/500">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="ui padded segment m-mobile-lr-clear">
-                <div class="ui mobile reversed stackable grid">
-                    <!--文章内容-->
-                    <div class="eleven wide column">
-                        <h3 class="ui header">你不是真正的快乐</h3>
-                        <p class="tags-article-content-text">
-                            你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐,你不是真正的快乐你不是真正的快乐....</p>
-
-
-                        <div class="ui stackable grid">
-                            <!--作者头像，名字，文章发表时间以及点击量-->
-                            <div class="row">
-                                <div class="eleven wide column">
-                                    <div class="ui mini horizontal link list">
-                                        <div class="item">
-                                            <!--作者头像-->
-                                            <img class="ui avatar image" src="https://picsum.photos/id/100/100/100">
-                                            <!--作者名字-->
-                                            <div class="content">
-                                                <div class="header">
-                                                    <a href="#">Henry</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--文章发表时间-->
-                                        <div class="item">
-                                            <i class="calendar icon"></i>2020-11-04
-                                        </div>
-                                        <!--访客数量量-->
-                                        <div class="item">
-                                            <i class="eye icon"></i>521
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--文章标签-->
-                                <div class="right aligned five wide column">
-                                    <a href="#" class="ui teal label label-padding-mini text-thin">美食广场</a>
-                                </div>
-                            </div>
-                            <!--文章标签-->
-                            <div class="row">
-                                <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-tiny"
-                                       style="font-weight: 400">美食天地</a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!--文章配图-->
-                    <div class="five wide column">
-                        <a href="#" target="_blank">
-                            <img class="ui rounded image"
-                                 src="https://picsum.photos/id/1/800/500">
+                                 src="https://picsum.photos/id/1/800/500" th:src="${blog.firstPicture}">
                         </a>
                     </div>
                 </div>
@@ -586,14 +103,16 @@
         </div>
 
         <!-- 文章底部翻页按钮-->
-        <div class="ui bottom attached segment">
+        <div class="ui bottom attached segment" th:if="${page.totalPages>1}">
             <div class="ui center aligned two column grid">
                 <div class="column">
-                    <a href="#" class="ui basic teal mini button">上一页</a>
+                    <a href="#" th:href="@{/(page = ${page.number}-1)}"
+                       th:unless="${page.first}" class="ui basic teal mini button">上一页</a>
                 </div>
 
                 <div class="column">
-                    <a href="#" class="ui basic teal mini button">下一页</a>
+                    <a href="#" th:href="@{/(page = ${page.number}+1)}"
+                       th:unless="${page.last}" class="ui basic teal mini button">下一页</a>
                 </div>
             </div>
         </div>
