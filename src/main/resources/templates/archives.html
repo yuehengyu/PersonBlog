@@ -22,97 +22,28 @@
                 </div>
 
                 <div class="right aligned column">
-                    <h3 class="ui header" style="color: #677686">共 <p class="archives-total-number">134</p> 篇</h3>
+                    <h3 class="ui header" style="color: #677686">共 <p class="archives-total-number"><span
+                            th:text="${countBlog}">博客总数</span></p> 篇
+                    </h3>
                 </div>
             </div>
         </div>
 
         <!--Jquery纵向时间轴-->
         <div class="ui attached segment">
-            <h2 class="m-timeline-header-text">2020</h2>
-            <div class="timeline">
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <a href="#"><h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p></a>
+            <th:block th:each="item : ${archiveMap}">
+                <h2 class="m-timeline-header-text" th:text="${item.key}">年份</h2>
+                <div class="timeline" th:each="blog:${item.value}">
+                    <div data-vtdate="September 2016"
+                         th:attr="data-vtdate=${#dates.format(blog.createTime, 'yyyy-MM-dd')}"
+                         style="padding:0.5em 1em !important;">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}"><h3 th:text="${blog.title}">文章标题</h3>
+                            <p style="padding-bottom: 0.5em!important;" th:text="${blog.description}">
+                                文章描述
+                            </p></a>
+                    </div>
                 </div>
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p>
-                </div>
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p>
-                </div>
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p>
-                </div>
-            </div>
-
-            <h2 class="m-timeline-header-text">2019</h2>
-            <div class="timeline">
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p>
-                </div>
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p>
-                </div>
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p>
-                </div>
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p>
-                </div>
-            </div>
-
-            <h2 class="m-timeline-header-text">2018</h2>
-            <div class="timeline">
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p>
-                </div>
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p>
-                </div>
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p>
-                </div>
-                <div data-vtdate="September 2016" style="padding:0.5em 1em !important;">
-                    <h3>你不是真正的快乐</h3>
-                    <p style="padding-bottom: 0.5em!important;">
-                        你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐你不是真正的快乐
-                    </p>
-                </div>
-            </div>
-
+            </th:block>
         </div>
     </div>
 </div>

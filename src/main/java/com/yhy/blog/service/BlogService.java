@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 博客service 业务层代码
@@ -85,6 +86,19 @@ public interface BlogService {
      * @return 符合条件的博客列表
      */
     Page<Blog> listQueryBlog(String query, Pageable pageable);
+
+
+    /**
+     * 返回所有的博客数据， 并存入到map中进行归档操作
+     * @return key为博客的年份， value为该年份包含的所有博客数据
+     */
+    Map<String, List<Blog>> archives();
+
+    /**
+     * 计算共有多少条博客
+     * @return 博客总数
+     */
+    Long countBlog();
 
 
 }

@@ -24,4 +24,10 @@ public interface BlogRepository extends JpaRepository<Blog, Long>,
     @Modifying
     @Query("update Blog b set b.views = b.views+1 where b.id = ?1")
     int updateViews(Long blogId);
+
+    @Query("select function('date_format',b.updateTime, '%Y') as year from Blog b group by function('date_format',b.updateTime, '%Y') order by function('date_format',b.updateTime, '%Y') desc ")
+    List<String> findGroupYears();
+
+    @Query("select b from Blog b where function('date_format',b.updateTime, '%Y') = ?1 order by function('date_format',b.updateTime, '%m') desc")
+    List<Blog> findByYear(String year);
 }

@@ -21,9 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -130,5 +128,20 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Page<Blog> listQueryBlog(String query, Pageable pageable) {
         return blogRepository.findByQuery(query, pageable);
+    }
+
+    @Override
+    public Map<String, List<Blog>> archives() {
+        List<String> years = blogRepository.findGroupYears();
+        Map<String, List<Blog>> map = new LinkedHashMap<>();
+        for (String year : years) {
+            map.put(year, blogRepository.findByYear(year));
+        }
+        return map;
+    }
+
+    @Override
+    public Long countBlog() {
+        return blogRepository.count();
     }
 }
